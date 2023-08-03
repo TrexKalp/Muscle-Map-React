@@ -17,6 +17,7 @@ import {
   Box,
   VStack,
   Select,
+  Input,
 } from "@chakra-ui/react";
 
 interface Exercise {
@@ -32,6 +33,8 @@ const MuscleDB: React.FC = () => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedMuscle, setSelectedMuscle] = useState<string>("");
+  const [selectedEquip, setSelectedEquip] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -65,14 +68,32 @@ const MuscleDB: React.FC = () => {
     setSelectedMuscle(event.currentTarget.value);
   };
 
-  const filteredExercises = selectedMuscle
-    ? exercises.filter(
-        (exercise) => exercise.target.toLowerCase() === selectedMuscle
-      )
-    : exercises;
+  const handleEquipChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedEquip(event.currentTarget.value);
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.currentTarget.value);
+    console.log("Search Term: ", event.currentTarget.value);
+  };
+
+  const filteredExercises = exercises.filter(
+    (exercise) =>
+      (selectedMuscle
+        ? exercise.target && exercise.target.toLowerCase() === selectedMuscle
+        : true) &&
+      (selectedEquip
+        ? exercise.equipment &&
+          exercise.equipment.toLowerCase() === selectedEquip
+        : true) &&
+      (searchTerm
+        ? exercise.name.toLowerCase().includes(searchTerm.toLowerCase())
+        : true)
+  );
 
   return (
     <>
+      <Input placeholder="Search" onChange={handleSearchChange} />
       <Select placeholder="Select muscle" onChange={handleMuscleChange}>
         <option value="abductors">Abductors</option>
         <option value="abs">Abs</option>
@@ -94,6 +115,37 @@ const MuscleDB: React.FC = () => {
         <option value="triceps">Triceps</option>
         <option value="upper back">Upper Back</option>
       </Select>
+      <Select placeholder="Select equipment" onChange={handleEquipChange}>
+        <option value="assisted">Assisted</option>
+        <option value="band">Band</option>
+        <option value="barbell">Barbell</option>
+        <option value="body weight">Body Weight</option>
+        <option value="bosu ball">Bosu Ball</option>
+        <option value="cable">Cable</option>
+        <option value="dumbbell">Dumbbell</option>
+        <option value="elliptical machine">Elliptical Machine</option>
+        <option value="ez barbell">EZ Barbell</option>
+        <option value="hammer">Hammer</option>
+        <option value="kettlebell">Kettlebell</option>
+        <option value="leverage machine">Leverage Machine</option>
+        <option value="medicine ball">Medicine Ball</option>
+        <option value="olympic barbell">Olympic Barbell</option>
+        <option value="resistance band">Resistance Band</option>
+        <option value="roller">Roller</option>
+        <option value="rope">Rope</option>
+        <option value="skierg machine">Skierg Machine</option>
+        <option value="sled machine">Sled Machine</option>
+        <option value="smith machine">Smith Machine</option>
+        <option value="stability ball">Stability Ball</option>
+        <option value="stationary bike">Stationary Bike</option>
+        <option value="stepmill machine">Stepmill Machine</option>
+        <option value="tire">Tire</option>
+        <option value="trap bar">Trap Bar</option>
+        <option value="upper body ergometer">Upper Body Ergometer</option>
+        <option value="weighted">Weighted</option>
+        <option value="wheel roller">Wheel Roller</option>
+      </Select>
+
       <Flex flexWrap="wrap">
         {filteredExercises.map((exercise, index) => (
           <div>
