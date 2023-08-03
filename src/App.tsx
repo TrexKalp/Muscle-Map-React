@@ -20,6 +20,7 @@ import RapidAPIExample from "./components/RapidApi";
 
 import MuscleTest from "./components/MuscleTest";
 import ExerciseCardList from "./components/ExerciseCardList";
+import MuscleDB from "./components/MuscleDB";
 
 function App() {
   return (
@@ -50,7 +51,8 @@ function App() {
         <Heading as="h1" marginY={5} fontSize="5xl">
           Exercises
         </Heading>
-        <MuscleTest />
+
+        <MuscleDB />
       </GridItem>
     </Grid>
   );

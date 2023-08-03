@@ -19,12 +19,20 @@ import {
 } from "@chakra-ui/react";
 
 interface Exercise {
-  name: string;
-  type: string;
-  muscle: string;
-  equipment: string;
-  difficulty: string;
-  instructions: string;
+  id: number;
+  exercise_name: string;
+  Category: string;
+  Difficulty: string;
+  Force: string;
+  Grips: string;
+  details: string;
+  steps: string[];
+  target: {
+    Primary: string;
+    Secondary: string;
+  };
+  videoURL: string[];
+  youtubeURL: string;
 }
 
 const ExerciseList: React.FC = () => {
@@ -36,12 +44,12 @@ const ExerciseList: React.FC = () => {
       try {
         setTimeout(async () => {
           const response = await axios.get<Exercise[]>(
-            "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+            "https://musclewiki.p.rapidapi.com/exercises",
             {
               headers: {
                 "X-RapidAPI-Key":
                   "c21c76fa2fmshca97611323aace0p1c3a66jsn9faa413d8ab5",
-                "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
+                "X-RapidAPI-Host": "musclewiki.p.rapidapi.com",
               },
             }
           );
@@ -65,7 +73,7 @@ const ExerciseList: React.FC = () => {
           <Card maxW="sm" margin={3}>
             <CardBody>
               <Image
-                src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                src={exercise.videoURL[0]}
                 alt="Green double couch with wooden legs"
                 borderRadius="lg"
               />
@@ -74,10 +82,10 @@ const ExerciseList: React.FC = () => {
                   <Text style={{ textTransform: "capitalize" }}></Text>
                 </Heading>
                 <Text style={{ textTransform: "capitalize" }}>
-                  {exercise.muscle}
+                  {exercise.target.Primary}
                 </Text>
                 <Text color="blue.600" fontSize="2xl">
-                  {exercise.name}
+                  {exercise.exercise_name}
                 </Text>
               </Stack>
             </CardBody>
