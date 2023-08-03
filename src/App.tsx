@@ -2,13 +2,24 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
-import { Grid, GridItem, HStack, Heading, Show, Text } from "@chakra-ui/react";
+import {
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Heading,
+  Select,
+  Show,
+  Text,
+} from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import MuscleGrid from "./components/MuscleGrid";
 import MuscleList from "./components/MuscleList";
 import ImageMapComponent from "./components/ImageMapper";
 import RapidAPIExample from "./components/RapidApi";
-import CardList from "./components/CardList";
+
+import MuscleTest from "./components/MuscleTest";
+import ExerciseCardList from "./components/ExerciseCardList";
 
 function App() {
   return (
@@ -32,13 +43,14 @@ function App() {
         </GridItem>
       </Show>
       <GridItem bg="" area="main">
-        <Heading paddingLeft={10} as="h1" marginY={5} fontSize="5xl">
-          Games
+        <Heading as="h1" marginTop={5} fontSize="5xl">
+          MuscleMap
         </Heading>
         <ImageMapComponent />
-        <MuscleGrid />
-        <RapidAPIExample />
-        <CardList />
+        <Heading as="h1" marginY={5} fontSize="5xl">
+          Exercises
+        </Heading>
+        <MuscleTest />
       </GridItem>
     </Grid>
   );

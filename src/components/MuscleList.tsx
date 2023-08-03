@@ -6,8 +6,13 @@ const MuscleList = () => {
     <>
       <Flex pos="absolute">
         <Stack>
-          <Heading fontSize="2xl" marginTop={9} marginBottom={3}>
-            Genres
+          <Heading
+            fontSize="2xl"
+            marginTop={0}
+            marginBottom={1}
+            color={"#25274D"}
+          >
+            MuscleMap
           </Heading>
 
           <List>

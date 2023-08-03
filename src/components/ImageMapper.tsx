@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ImageMapper from "react-img-mapper";
 import map from "../assets/images/musclemap3.png";
 import "./ImageMapComponent.css";
+import { Heading } from "@chakra-ui/react";
 
 const ImageMapComponent: React.FC = () => {
   const areas = [
