@@ -36,6 +36,7 @@ const MuscleDB: React.FC = () => {
   const [selectedMuscle, setSelectedMuscle] = useState<string>("");
   const [selectedEquip, setSelectedEquip] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const apiKey = import.meta.env.VITE_RAPIDAPI_KEY;
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -45,7 +46,7 @@ const MuscleDB: React.FC = () => {
             "https://exercisedb.p.rapidapi.com/exercises",
             {
               headers: {
-                "X-RapidAPI-Key": process.env.REACT_API_RAPID_API_KEY,
+                "X-RapidAPI-Key": apiKey,
                 "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
               },
             }
