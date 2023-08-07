@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import ImageMapper from "react-img-mapper";
 import map from "../assets/images/musclemap3.png";
-import "./ImageMapComponent.css";
-import { Heading } from "@chakra-ui/react";
+import { Heading, Select } from "@chakra-ui/react";
 
 const ImageMapComponent: React.FC = () => {
+  const [selectedArea, setSelectedArea] = useState("");
+
   const areas = [
     {
       name: "bicep",
@@ -14,9 +15,10 @@ const ImageMapComponent: React.FC = () => {
         147, 204, 139, 206, 132, 208, 125, 214, 119, 224, 115, 235, 114, 256,
         116, 272,
       ], // Example coordinates
-      href: "https://www.google.com/",
+
       alt: "Area 1",
       className: "bicep",
+      href: "javascript:handleAreaClick('bicep')",
     },
     {
       name: "bicep",
@@ -434,20 +436,23 @@ const ImageMapComponent: React.FC = () => {
   ];
 
   return (
-    <div className="image-container">
-      <ImageMapper
-        src={map}
-        map={{
-          name: "my-map",
-          areas: areas,
-        }}
-        width={860}
-        height={753}
-        fillColor="#aff5f5B3"
-        strokeColor="#3320FF"
-        lineWidth={3}
-      />
-    </div>
+    <>
+      <div className="image-container">
+        <ImageMapper
+          src={map}
+          map={{
+            name: "my-map",
+            areas: areas,
+          }}
+          width={860}
+          height={753}
+          fillColor="#aff5f5B3"
+          strokeColor="#3320FF"
+          lineWidth={3}
+        />
+      </div>
+      <div></div>
+    </>
   );
 };
 

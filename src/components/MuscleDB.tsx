@@ -93,8 +93,8 @@ const MuscleDB: React.FC = () => {
 
   return (
     <>
-      <Input placeholder="Search" onChange={handleSearchChange} />
-      <Select placeholder="Select muscle" onChange={handleMuscleChange}>
+      <Input placeholder="Search by name" onChange={handleSearchChange} />
+      <Select placeholder="All muscles" onChange={handleMuscleChange}>
         <option value="abductors">Abductors</option>
         <option value="abs">Abs</option>
         <option value="adductors">Adductors</option>
@@ -115,7 +115,7 @@ const MuscleDB: React.FC = () => {
         <option value="triceps">Triceps</option>
         <option value="upper back">Upper Back</option>
       </Select>
-      <Select placeholder="Select equipment" onChange={handleEquipChange}>
+      <Select placeholder="All equipment" onChange={handleEquipChange}>
         <option value="assisted">Assisted</option>
         <option value="band">Band</option>
         <option value="barbell">Barbell</option>

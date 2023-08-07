@@ -12,7 +12,7 @@ import {
   Show,
   Text,
 } from "@chakra-ui/react";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/SidebarWithHeader";
 import MuscleGrid from "./components/MuscleGrid";
 import MuscleList from "./components/MuscleList";
 import ImageMapComponent from "./components/ImageMapper";
@@ -21,38 +21,25 @@ import RapidAPIExample from "./components/RapidApi";
 import MuscleTest from "./components/MuscleTest";
 import ExerciseCardList from "./components/ExerciseCardList";
 import MuscleDB from "./components/MuscleDB";
+import SidebarWithHeader from "./components/SidebarWithHeader";
+import { Box, useBreakpointValue } from "@chakra-ui/react";
 
 function App() {
+  const templateLayout = useBreakpointValue({
+    base: `"nav" "sidebar" "main"`,
+    lg: `"nav nav" "sidebar main"`,
+  });
+
   return (
     <Grid
-      templateAreas={{
-        base: `"nav" "main"`,
-        lg: `"nav nav" "aside main"`,
-      }}
-      /*templateColumns={{
+      templateAreas={templateLayout}
+      templateColumns={{
         base: "1fr",
         lg: "200px 1fr",
       }}
-      */
     >
-      <GridItem area="nav" bg="blue" paddingX={5} paddingY={5} boxShadow={10}>
-        <NavBar />
-      </GridItem>
-      <Show above="lg">
-        <GridItem bg="blue" area="aside" paddingX={5} width={200}>
-          <MuscleList />
-        </GridItem>
-      </Show>
-      <GridItem bg="" area="main">
-        <Heading as="h1" marginTop={5} fontSize="5xl">
-          MuscleMap
-        </Heading>
-        <ImageMapComponent />
-        <Heading as="h1" marginY={5} fontSize="5xl">
-          Exercises
-        </Heading>
-
-        <MuscleDB />
+      <GridItem area="nav">
+        <SidebarWithHeader />
       </GridItem>
     </Grid>
   );
