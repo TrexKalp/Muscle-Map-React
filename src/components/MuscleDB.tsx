@@ -18,6 +18,7 @@ import {
   VStack,
   Select,
   Input,
+  Badge,
 } from "@chakra-ui/react";
 
 interface Exercise {
@@ -44,8 +45,7 @@ const MuscleDB: React.FC = () => {
             "https://exercisedb.p.rapidapi.com/exercises",
             {
               headers: {
-                "X-RapidAPI-Key":
-                  "c21c76fa2fmshca97611323aace0p1c3a66jsn9faa413d8ab5",
+                "X-RapidAPI-Key": process.env.REACT_API_RAPID_API_KEY,
                 "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
               },
             }
@@ -160,14 +160,16 @@ const MuscleDB: React.FC = () => {
                   <Heading size="md">
                     <Text style={{ textTransform: "capitalize" }}></Text>
                   </Heading>
-                  <Text style={{ textTransform: "capitalize" }}>
-                    {exercise.target}
-                  </Text>
-                  <Text
-                    style={{ textTransform: "capitalize" }}
-                    color="blue.600"
-                    fontSize="2xl"
-                  >
+
+                  <Stack direction="row">
+                    <Badge fontSize=".9em" colorScheme="blue">
+                      {exercise.target}
+                    </Badge>
+                    <Badge fontSize=".9em" colorScheme="green">
+                      {exercise.equipment}
+                    </Badge>
+                  </Stack>
+                  <Text style={{ textTransform: "capitalize" }} fontSize="2xl">
                     {exercise.name}
                   </Text>
                 </Stack>

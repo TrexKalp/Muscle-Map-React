@@ -10,7 +10,6 @@ const theme = extendTheme({
     colors: {
         black: '#000',
         white: '#fff',
-        blue: '#BEE3F8',
         gray: '#CBD5E0',
         cyan: "#76E4F7"
     }
