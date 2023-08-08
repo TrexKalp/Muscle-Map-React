@@ -12,15 +12,7 @@ import {
   Show,
   Text,
 } from "@chakra-ui/react";
-import NavBar from "./components/SidebarWithHeader";
-import MuscleGrid from "./components/MuscleGrid";
-import MuscleList from "./components/MuscleList";
-import ImageMapComponent from "./components/ImageMapper";
-import RapidAPIExample from "./components/RapidApi";
 
-import MuscleTest from "./components/MuscleTest";
-import ExerciseCardList from "./components/ExerciseCardList";
-import MuscleDB from "./components/MuscleDB";
 import SidebarWithHeader from "./components/SidebarWithHeader";
 import { Box, useBreakpointValue } from "@chakra-ui/react";
 

@@ -164,7 +164,7 @@ const MuscleDB: React.FC = () => {
         ) : (
           filteredExercises.map((exercise, index) => (
             <div>
-              <Card maxW="sm" margin={3}>
+              <Card maxW="sm" margin={3} height="600px">
                 <CardBody>
                   <Image
                     src={exercise.gifUrl}
@@ -184,6 +184,7 @@ const MuscleDB: React.FC = () => {
                         {exercise.equipment}
                       </Badge>
                     </Stack>
+
                     <Text
                       style={{ textTransform: "capitalize" }}
                       fontSize="2xl"
