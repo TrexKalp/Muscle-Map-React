@@ -155,7 +155,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         fontFamily="arial"
         fontWeight="bold"
       >
-        Logo
+        MuscleMap
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>

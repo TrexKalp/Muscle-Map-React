@@ -20,6 +20,7 @@ import {
   Input,
   Badge,
 } from "@chakra-ui/react";
+import SkeletonCard from "./SkeletonCard";
 
 interface Exercise {
   bodyPart: string;
@@ -148,47 +149,64 @@ const MuscleDB: React.FC = () => {
       </Select>
 
       <Flex flexWrap="wrap">
-        {filteredExercises.map((exercise, index) => (
-          <div>
-            <Card maxW="sm" margin={3}>
-              <CardBody>
-                <Image
-                  src={exercise.gifUrl}
-                  alt="Green double couch with wooden legs"
-                  borderRadius="lg"
-                />
-                <Stack mt="6" spacing="3">
-                  <Heading size="md">
-                    <Text style={{ textTransform: "capitalize" }}></Text>
-                  </Heading>
+        {isLoading ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : (
+          filteredExercises.map((exercise, index) => (
+            <div>
+              <Card maxW="sm" margin={3}>
+                <CardBody>
+                  <Image
+                    src={exercise.gifUrl}
+                    alt="Green double couch with wooden legs"
+                    borderRadius="lg"
+                  />
+                  <Stack mt="6" spacing="3">
+                    <Heading size="md">
+                      <Text style={{ textTransform: "capitalize" }}></Text>
+                    </Heading>
 
-                  <Stack direction="row">
-                    <Badge fontSize=".9em" colorScheme="blue">
-                      {exercise.target}
-                    </Badge>
-                    <Badge fontSize=".9em" colorScheme="green">
-                      {exercise.equipment}
-                    </Badge>
+                    <Stack direction="row">
+                      <Badge fontSize=".9em" colorScheme="blue">
+                        {exercise.target}
+                      </Badge>
+                      <Badge fontSize=".9em" colorScheme="green">
+                        {exercise.equipment}
+                      </Badge>
+                    </Stack>
+                    <Text
+                      style={{ textTransform: "capitalize" }}
+                      fontSize="2xl"
+                    >
+                      {exercise.name}
+                    </Text>
                   </Stack>
-                  <Text style={{ textTransform: "capitalize" }} fontSize="2xl">
-                    {exercise.name}
-                  </Text>
-                </Stack>
-              </CardBody>
-              <Divider />
-              <CardFooter>
-                <ButtonGroup spacing="2">
-                  <Button variant="solid" colorScheme="red">
-                    More Info
-                  </Button>
-                  <Button variant="ghost" colorScheme="red">
-                    Similar
-                  </Button>
-                </ButtonGroup>
-              </CardFooter>
-            </Card>
-          </div>
-        ))}
+                </CardBody>
+                <Divider />
+                <CardFooter>
+                  <ButtonGroup spacing="2">
+                    <Button variant="solid" colorScheme="red">
+                      More Info
+                    </Button>
+                    <Button variant="ghost" colorScheme="red">
+                      Similar
+                    </Button>
+                  </ButtonGroup>
+                </CardFooter>
+              </Card>
+            </div>
+          ))
+        )}
       </Flex>
     </>
   );
