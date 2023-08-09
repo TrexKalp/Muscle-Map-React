@@ -168,7 +168,7 @@ const MuscleDB: React.FC = () => {
                 <CardBody>
                   <Image
                     src={exercise.gifUrl}
-                    alt="Green double couch with wooden legs"
+                    alt="exercise"
                     borderRadius="lg"
                   />
                   <Stack mt="6" spacing="3">
