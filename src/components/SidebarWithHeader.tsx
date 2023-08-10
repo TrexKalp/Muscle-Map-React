@@ -39,6 +39,7 @@ import ImageMapComponent from "./ImageMapper";
 import MuscleDB from "./MuscleDB";
 import SvgMapper from "./SvgMapper";
 import ParentComponent from "./ParentComponent";
+import ColorModeSwitch from "./ColorModeSwitch";
 
 interface LinkItemProps {
   name: string;
@@ -70,7 +71,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={useColorModeValue("", "gray.900")}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
@@ -110,7 +111,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         cursor="pointer"
         _hover={{
           bg: "cyan.400",
-          color: "white",
+          color: "",
         }}
         {...rest}
       >
@@ -119,7 +120,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
             mr="4"
             fontSize="16"
             _groupHover={{
-              color: "white",
+              color: "",
             }}
             as={icon}
           />
@@ -137,7 +138,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={useColorModeValue("", "gray.900")}
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("gray.200", "gray.700")}
       justifyContent={{ base: "space-between", md: "flex-end" }}
@@ -161,12 +162,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
-        />
+        <ColorModeSwitch />
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -196,7 +192,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               </HStack>
             </MenuButton>
             <MenuList
-              bg={useColorModeValue("white", "gray.900")}
+              bg={useColorModeValue("", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <MenuItem>Profile</MenuItem>
