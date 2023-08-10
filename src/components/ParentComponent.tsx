@@ -898,9 +898,9 @@ const ScrollTop: React.FC = () => {
   const [showButton, setShowButton] = useState(false);
 
   const checkScrollTop = () => {
-    if (!showButton && window.pageYOffset > 100) {
+    if (!showButton && window.pageYOffset > 175) {
       setShowButton(true);
-    } else if (showButton && window.pageYOffset <= 100) {
+    } else if (showButton && window.pageYOffset <= 175) {
       setShowButton(false);
     }
   };
