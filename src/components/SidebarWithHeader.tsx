@@ -38,7 +38,7 @@ import { IconType } from "react-icons";
 import ImageMapComponent from "./ImageMapper";
 import MuscleDB from "./MuscleDB";
 import SvgMapper from "./SvgMapper";
-import ParentComponent from "./Parent";
+import ParentComponent from "./ParentComponent";
 
 interface LinkItemProps {
   name: string;
