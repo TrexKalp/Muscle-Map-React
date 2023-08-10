@@ -1,4 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  Card,
+  SimpleGrid,
+  Text,
+  Image,
+  Stack,
+  CardBody,
+  Heading,
+  Divider,
+  CardFooter,
+  ButtonGroup,
+  Button,
+  HStack,
+  Flex,
+  Box,
+  VStack,
+  Select,
+  Input,
+  Badge,
+} from "@chakra-ui/react";
+import SkeletonCard from "./SkeletonCard";
+
+const ParentComponent: React.FC = () => {
+  const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null);
+
+  return (
+    <div>
+      <SvgMapper
+        selectedMuscle={selectedMuscle}
+        setSelectedMuscle={setSelectedMuscle}
+      />
+      <MuscleDB
+        selectedMuscle={selectedMuscle}
+        setSelectedMuscle={setSelectedMuscle}
+      />
+    </div>
+  );
+};
 
 const SvgMapper: React.FC<{
   selectedMuscle: string | null;
@@ -44,18 +83,18 @@ const SvgMapper: React.FC<{
       >
         <g
           className={`body-map__muscle ${
-            hovered === "abdominals" ? "highlighted" : ""
+            hovered === "abs" ? "highlighted" : ""
           }`} // Add a class to highlight if this muscle is hovered
-          id="abdominals"
-          onMouseEnter={() => handleMouseEnter("abdominals")} // Pass the ID to the mouse enter handler
+          id="abs"
+          onMouseEnter={() => handleMouseEnter("abs")} // Pass the ID to the mouse enter handler
           onMouseLeave={handleMouseLeave}
-          onClick={() => handleMuscleClick("abdominals")}
+          onClick={() => handleMuscleClick("abs")}
         >
           <path
             d="M384.32 490.61C386.41 457.79 388.65 408.87 388.74 397.67C388.79 392.09 388.67 389.6 388.58 387.74L388.56 387.35C388.5 385.83 388.44 384.62 388.54 382.23C388.56 381.7 388.59 381.18 388.62 380.71C388.64 380.58 388.64 380.45 388.64 380.34C388.68 379.72 388.71 379.12 388.76 378.55L388.81 378.04C388.83 377.82 388.84 377.62 388.88 377.39C389.59 370 391.12 365.02 392.36 361.01L392.47 360.64C393.98 355.77 394.81 353.08 393.26 349.6C391.24 345.04 385.88 341.08 376.39 337.12C376.36 337.11 376.32 337.1 376.29 337.09C376.29 337.09 376.29 337.09 376.26 337.07C374.72 336.53 373.1 335.9 371.46 335.19C371.42 335.17 371.39 335.16 371.33 335.14C360.54 331.16 346.9 328.38 340.97 332.51C338.84 334 337.8 336.3 337.8 339.54C337.8 340.28 337.2 340.88 336.42 340.89C336.33 340.86 336.19 340.85 336.1 340.89C335.36 340.89 334.76 340.29 334.76 339.55C334.76 336.32 333.72 334.02 331.57 332.52C329.69 331.21 321.97 327.54 301.28 335.13L301.18 335.17L301.1 335.2C299.5 335.9 297.87 336.54 296.23 337.1H296.21C296.21 337.1 296.17 337.12 296.16 337.13C286.67 341.09 281.31 345.05 279.31 349.61C277.75 353.12 278.59 355.82 280.11 360.73C281.31 364.54 282.95 369.77 283.7 377.43C283.83 378.3 283.91 379.28 283.93 380.4C283.94 380.48 283.94 380.57 283.94 380.7C283.98 381.21 284.01 381.72 284.03 382.25C284.13 384.82 284.09 386.01 283.99 387.8C283.9 389.62 283.78 392.11 283.83 397.69C283.94 409.23 286.19 458.22 288.25 490.63C291.6 543.3 323.93 583.5 336.14 583.49C336.19 583.51 336.25 583.51 336.31 583.51C336.36 583.51 336.41 583.51 336.45 583.49C348.6 583.49 380.92 543.3 384.28 490.62L384.32 490.61ZM291.68 377.57C291.08 377.57 290.56 377.18 290.39 376.6C290.18 375.9 290.59 375.16 291.3 374.94C305.76 370.74 315.58 368.2 330 368.49C334.47 368.47 334.8 361.56 334.8 351.03C334.8 350.29 335.4 349.69 336.18 349.69C336.27 349.72 336.41 349.73 336.49 349.69C337.23 349.69 337.83 350.29 337.83 351.03C337.83 361.57 338.17 368.47 342.66 368.49C357.04 368.2 366.87 370.74 381.31 374.93C381.66 375.04 381.94 375.27 382.12 375.58C382.29 375.89 382.33 376.25 382.23 376.59C382.04 377.3 381.26 377.71 380.57 377.51C367.11 373.59 357.74 371.15 344.95 371.15C344.21 371.15 343.46 371.15 342.7 371.17C339.84 371.15 337.89 369.72 336.73 366.78C336.6 366.45 336.05 366.45 335.92 366.78C334.74 369.76 332.86 371.16 330 371.17C315.97 370.87 306.3 373.36 292.05 377.51C291.95 377.54 291.83 377.56 291.69 377.56L291.68 377.57ZM369.88 378.6C369.79 378.95 369.56 379.25 369.25 379.43C368.95 379.6 368.59 379.65 368.25 379.55L366.97 379.22C361.69 377.83 352.87 375.5 345.68 376.72C339.05 377.85 337.84 381.39 337.84 387.95C337.84 388.69 337.24 389.29 336.46 389.29C336.41 389.27 336.35 389.27 336.29 389.27C336.24 389.27 336.19 389.27 336.15 389.29C335.4 389.29 334.81 388.7 334.81 387.95C334.81 381.39 333.59 377.86 326.95 376.72C319.75 375.5 310.9 377.84 305.62 379.23L304.37 379.55C304.03 379.64 303.68 379.6 303.37 379.43C303.06 379.25 302.83 378.96 302.74 378.6C302.55 377.87 302.98 377.15 303.71 376.96L304.92 376.64C310.41 375.18 319.59 372.73 327.41 374.07C331.62 374.78 334.41 376.51 335.94 379.35C336.09 379.63 336.56 379.63 336.71 379.35C338.24 376.51 341.03 374.78 345.24 374.07C353.03 372.73 362.22 375.18 367.71 376.64L368.93 376.96C369.65 377.15 370.07 377.87 369.88 378.59V378.6ZM293.5 423.27C293.25 423.01 293.12 422.67 293.12 422.31C293.12 421.93 293.28 421.57 293.55 421.33C293.8 421.1 294.13 420.98 294.47 421L295.96 421.02C310.93 421.27 325.07 421.51 332.23 417.45C334.4 416.23 334.82 413.46 334.95 410.87C334.88 409.36 334.92 407.73 334.97 406.17L334.92 404.53C334.83 402.44 334.79 400.7 334.79 399.06C334.79 398.32 335.39 397.72 336.17 397.72C336.26 397.75 336.39 397.75 336.48 397.72C337.22 397.72 337.82 398.32 337.82 399.06C337.82 401.02 337.74 402.97 337.68 404.58C337.66 405.03 337.65 405.46 337.65 405.91C337.7 407.59 337.74 409.37 337.65 411.07C337.85 414.58 338.67 416.48 340.37 417.44C347.53 421.5 361.67 421.26 376.63 421.01L378.15 420.99C378.48 420.97 378.79 421.08 379.04 421.31C379.32 421.56 379.48 421.93 379.49 422.29C379.49 423.03 378.89 423.65 378.16 423.67L376.69 423.69C373.67 423.75 369.73 423.81 365.99 423.81C355.71 423.81 345.32 423.32 339.04 419.77C338.05 419.2 337.25 418.45 336.65 417.55C336.57 417.43 336.43 417.35 336.29 417.35C336.14 417.35 336 417.43 335.93 417.55C335.36 418.45 334.59 419.18 333.56 419.77C327.29 423.33 316.9 423.82 306.61 423.82C302.86 423.82 298.93 423.75 295.93 423.7L294.44 423.68C294.09 423.68 293.75 423.53 293.5 423.27ZM369.92 427.61C369.87 427.98 369.68 428.31 369.39 428.53C369.12 428.74 368.78 428.82 368.43 428.77L368.25 428.75C362.71 428.11 353.43 427.04 345.29 427.17C338.96 427.24 337.83 430.51 337.83 439.66C337.83 440.4 337.23 441 336.45 441C336.4 440.98 336.34 440.97 336.28 440.97C336.23 440.97 336.18 440.97 336.14 440.99C335.4 440.99 334.8 440.39 334.8 439.65C334.8 430.5 333.67 427.23 327.32 427.16C319.22 427.04 309.97 428.1 304.44 428.73L304.17 428.76C303.44 428.85 302.78 428.33 302.69 427.6C302.61 426.86 303.14 426.19 303.87 426.11C309.51 425.45 318.94 424.36 327.36 424.48C331.61 424.54 334.41 426 335.93 428.93C336.08 429.22 336.55 429.22 336.7 428.93C338.22 426 341.02 424.54 345.27 424.48C353.81 424.37 363.52 425.5 368.75 426.11C369.48 426.19 370.01 426.86 369.93 427.59L369.92 427.61ZM295 470.9C294.76 470.64 294.63 470.3 294.64 469.95C294.65 469.58 294.82 469.23 295.09 468.98C295.34 468.75 295.68 468.64 296.02 468.66C301.12 468.84 304.81 469.09 308.07 469.3L309.04 469.36C314.3 469.75 318.85 470.08 327.57 469.82C333.52 469.39 334.79 467.8 334.79 451.93C334.79 451.19 335.39 450.59 336.17 450.58C336.26 450.61 336.4 450.62 336.49 450.58C337.23 450.58 337.83 451.18 337.83 451.92C337.83 468.54 339.46 469.4 345.14 469.83C353.76 470.07 358.3 469.73 363.56 469.35L364.53 469.28C367.79 469.06 371.48 468.81 376.6 468.63C376.92 468.6 377.24 468.71 377.5 468.94C377.79 469.19 377.96 469.55 377.97 469.92C377.98 470.27 377.85 470.61 377.61 470.87C377.36 471.13 377.03 471.28 376.67 471.3C371.13 471.51 367.25 471.78 363.75 472.03C359.57 472.32 355.97 472.58 350.66 472.58C348.59 472.58 346.79 472.55 344.99 472.49C340.44 472.15 338.04 470.74 336.73 467.64C336.66 467.48 336.5 467.37 336.33 467.37C336.16 467.37 336 467.47 335.93 467.63C334.6 470.73 332.21 472.14 327.7 472.48C325.86 472.54 324.02 472.57 321.93 472.57C316.61 472.57 312.84 472.3 308.86 472.02C305.36 471.77 301.47 471.5 295.94 471.29C295.58 471.28 295.25 471.13 295.01 470.87L295 470.9ZM337.83 570.5C337.83 571.24 337.23 571.84 336.49 571.84H336.14C335.4 571.84 334.8 571.24 334.8 570.5V503.38C334.8 502.63 335.39 502.04 336.14 502.04H336.49C337.23 502.04 337.83 502.64 337.83 503.38V570.5ZM337.66 488.3C337.64 488.38 337.64 488.47 337.66 488.56C337.71 489.72 337.71 490.89 337.71 492.02V492.8C337.71 493.54 337.11 494.14 336.37 494.14H336.25C335.51 494.14 334.91 493.54 334.91 492.8V492.02C334.91 490.87 334.91 489.69 334.96 488.49V488.38C334.78 483.98 334.01 480.91 330.82 480.18C325.59 479 311.19 477.57 304.86 477.57C304.57 477.57 304.3 477.57 304.04 477.57C303.73 477.6 303.41 477.48 303.15 477.25C302.87 476.99 302.7 476.63 302.7 476.26C302.7 475.9 302.83 475.56 303.07 475.3C303.32 475.04 303.65 474.9 304.01 474.89C310.18 474.76 325.81 476.29 331.41 477.56C333.44 478.03 334.93 479.08 335.95 480.77C336.03 480.9 336.17 480.98 336.32 480.98C336.47 480.98 336.62 480.9 336.69 480.77C337.69 479.08 339.16 478.04 341.2 477.56C346.75 476.3 362.39 474.78 368.62 474.89C368.98 474.89 369.31 475.04 369.56 475.3C369.8 475.56 369.93 475.89 369.92 476.25C369.92 476.62 369.75 476.97 369.48 477.22C369.24 477.44 368.94 477.56 368.63 477.56C368.6 477.56 368.58 477.56 368.55 477.56C362.8 477.41 347.33 478.91 341.81 480.16C338.63 480.89 337.84 483.93 337.66 488.29V488.3Z"
             style={{
               fill:
-                selectedMuscle === "abdominals" || hovered === "abdominals"
+                selectedMuscle === "abs" || hovered === "abs"
                   ? "lightblue"
                   : "#D3D3D3",
             }}
@@ -63,18 +102,18 @@ const SvgMapper: React.FC<{
         </g>
         <g
           className={`body-map__muscle ${
-            hovered === "obliques" ? "highlighted" : ""
+            hovered === "abs" ? "highlighted" : ""
           }`} // Add a class to highlight if this muscle is hovered
-          id="obliques"
-          onMouseEnter={() => handleMouseEnter("obliques")} // Pass the ID to the mouse enter handler
+          id="abs"
+          onMouseEnter={() => handleMouseEnter("abs")} // Pass the ID to the mouse enter handler
           onMouseLeave={handleMouseLeave}
-          onClick={() => handleMuscleClick("obliques")}
+          onClick={() => handleMuscleClick("abs")}
         >
           <path
             d="M278.25 405.1L278.22 405.27L278.23 405.26L278.2 405.42L278.181 405.528C275.415 420.952 272.286 438.408 274.68 454.63C279.61 488.3 267.94 503.64 262.69 508.67C257.5 513.64 249.36 516.54 241.25 516.54C239.37 516.54 237.5 516.38 235.66 516.06C235.43 516.02 235.27 515.81 235.3 515.58C236.6 505.04 237.65 495.4 238.26 488.43C238.68 483.48 239.34 478.52 240.05 473.27L240.08 473.02L240.082 473.006C242.671 453.691 245.348 433.726 235.63 414.4C215.71 376.03 210.63 351.86 209.81 347.41V347.31C209.81 347.26 209.81 347.22 209.83 347.17C210.97 343.85 211.84 340.34 212.44 336.75C213.35 331.07 215.45 317.93 211.12 308.04C211.04 307.85 211.1 307.63 211.27 307.51C211.44 307.39 211.67 307.41 211.82 307.55C214.24 309.84 216.37 312.33 218.14 314.46C219.35 315.91 220.38 317.07 221.37 318.09C221.384 318.104 221.398 318.12 221.413 318.137C221.43 318.157 221.449 318.179 221.47 318.2C221.47 318.21 221.54 318.28 221.54 318.28C231.955 329.911 244.178 340.439 254.971 349.736L255.08 349.83L255.22 349.96L255.238 349.975C268.64 361.529 280.21 371.503 281.06 377.77C281.088 377.911 281.108 378.106 281.127 378.295L281.13 378.33V378.45C281.15 378.5 281.17 378.65 281.17 378.82C281.21 379.09 281.23 379.41 281.25 379.75L281.28 380.33C281.3 380.41 281.3 380.49 281.3 380.56C281.51 386.9 280 395.33 278.25 405.1Z"
             style={{
               fill:
-                selectedMuscle === "obliques" || hovered === "obliques"
+                selectedMuscle === "abs" || hovered === "abs"
                   ? "lightblue"
                   : "#D3D3D3",
             }}
@@ -83,7 +122,7 @@ const SvgMapper: React.FC<{
             d="M460.77 307.59C460.92 307.45 461.15 307.43 461.32 307.55L461.33 307.56C461.5 307.68 461.56 307.9 461.48 308.09C457.17 317.96 459.26 331.07 460.16 336.67L460.18 336.77C460.78 340.36 461.65 343.87 462.79 347.19C462.81 347.23 462.81 347.28 462.81 347.33V347.43C461.66 353.7 456.4 377.07 436.99 414.44C427.27 433.74 429.95 453.72 432.56 473.03V473.13C433.34 478.83 433.97 483.58 434.39 488.44C434.96 495.23 436.01 504.88 437.33 515.59C437.36 515.82 437.2 516.03 436.97 516.07C435.14 516.39 433.26 516.54 431.39 516.54C423.28 516.54 415.13 513.64 409.94 508.67C404.69 503.63 393.02 488.29 397.95 454.63C400.36 438.26 397.2 420.73 394.4 405.27L394.37 405.08C392.62 395.32 391.11 386.89 391.32 380.55C391.32 380.51 391.32 380.44 391.34 380.36C391.34 380.29 391.35 380.2 391.37 380.11C391.41 379.35 391.48 378.57 391.55 377.8C391.55 377.78 391.55 377.72 391.58 377.63C392.6 371.342 404.153 361.386 417.528 349.861L417.676 349.733C428.442 340.462 440.614 329.981 451.07 318.29L451.14 318.21C451.17 318.17 451.21 318.13 451.24 318.1C452.33 316.97 453.41 315.75 454.46 314.47C456.35 312.19 458.42 309.78 460.77 307.59Z"
             style={{
               fill:
-                selectedMuscle === "obliques" || hovered === "obliques"
+                selectedMuscle === "abs" || hovered === "abs"
                   ? "lightblue"
                   : "#D3D3D3",
             }}
@@ -147,18 +186,18 @@ const SvgMapper: React.FC<{
         </g>
         <g
           className={`body-map__muscle ${
-            hovered === "shoulders" ? "highlighted" : ""
+            hovered === "delts" ? "highlighted" : ""
           }`} // Add a class to highlight if this muscle is hovered
-          id="shoulders"
-          onMouseEnter={() => handleMouseEnter("shoulders")} // Pass the ID to the mouse enter handler
+          id="delts"
+          onMouseEnter={() => handleMouseEnter("delts")} // Pass the ID to the mouse enter handler
           onMouseLeave={handleMouseLeave}
-          onClick={() => handleMuscleClick("shoulders")}
+          onClick={() => handleMuscleClick("delts")}
         >
           <path
             d="M152.89 303.71C152.83 303.75 152.75 303.77 152.68 303.77H152.66C152.56 303.77 152.47 303.74 152.39 303.68C152.26 303.57 152.19 303.39 152.24 303.22C157.74 282.4 160.82 274.86 162.86 269.87L162.897 269.778C163.919 267.242 164.719 265.259 165.46 262.65C171.07 244.34 184.75 221.38 218.1 216C218.85 215.87 219.39 215.77 219.69 215.7L220.14 215.58C220.467 215.498 220.837 215.404 221.242 215.301C221.728 215.178 222.262 215.042 222.83 214.9C223.469 214.73 224.088 214.571 224.706 214.411L224.71 214.41L225.77 214.14C225.81 214.13 225.84 214.13 225.88 214.13C243.5 210.59 262.01 215.16 271.47 218.2C271.64 218.25 271.77 218.42 271.77 218.6C271.78 218.79 271.66 218.95 271.49 219.02C267.45 220.55 261.53 223.08 256.28 226.42C245.175 233.477 240.444 239.724 233.899 248.368L233.89 248.38C230.84 252.44 227.43 256.97 222.68 262.54L222.658 262.566C217.699 268.376 207.4 280.443 194.34 289.32C190.84 291.69 184.95 293.94 177.31 295.83H177.29C177.24 295.85 177.18 295.86 177.14 295.86C173.74 296.25 170.23 296.96 166.75 297.97C166.733 297.974 166.717 297.977 166.703 297.981C166.604 298.003 166.551 298.015 166.49 298.05C163.47 298.93 160.58 299.99 157.83 301.22C156.1 302.01 154.44 302.84 152.89 303.71Z"
             style={{
               fill:
-                selectedMuscle === "shoulders" || hovered === "shoulders"
+                selectedMuscle === "delts" || hovered === "delts"
                   ? "lightblue"
                   : "#D3D3D3",
             }}
@@ -167,7 +206,7 @@ const SvgMapper: React.FC<{
             d="M400.85 218.61C400.85 218.43 400.97 218.27 401.15 218.21L401.14 218.23C410.58 215.19 429.07 210.61 446.76 214.17C447.006 214.234 447.249 214.295 447.49 214.357C447.858 214.451 448.222 214.544 448.59 214.64L449.77 214.94L450.317 215.078C451.36 215.34 452.27 215.569 452.91 215.74C453.2 215.8 453.74 215.91 454.49 216.03C487.82 221.4 501.51 244.33 507.13 262.62C507.872 265.301 508.673 267.288 509.678 269.78L509.71 269.86C511.77 274.9 514.86 282.46 520.36 303.24C520.41 303.41 520.35 303.59 520.21 303.7C520.13 303.76 520.03 303.79 519.94 303.79C519.87 303.79 519.8 303.77 519.73 303.73C518.16 302.85 516.5 302.01 514.78 301.24C507.02 297.76 499.95 296.39 495.38 295.86C487.71 293.99 481.81 291.74 478.26 289.32C465.161 280.424 454.873 268.349 449.914 262.528L449.89 262.5C445.03 256.78 441.4 251.97 438.76 248.45L438.65 248.31C432.13 239.69 427.42 233.47 416.34 226.43C411.09 223.11 405.17 220.57 401.13 219.03C400.96 218.96 400.85 218.79 400.85 218.61Z"
             style={{
               fill:
-                selectedMuscle === "shoulders" || hovered === "shoulders"
+                selectedMuscle === "delts" || hovered === "delts"
                   ? "lightblue"
                   : "#D3D3D3",
             }}
@@ -203,18 +242,18 @@ const SvgMapper: React.FC<{
         </g>
         <g
           className={`body-map__muscle ${
-            hovered === "chest" ? "highlighted" : ""
+            hovered === "pectorals" ? "highlighted" : ""
           }`} // Add a class to highlight if this muscle is hovered
-          id="chest"
-          onMouseEnter={() => handleMouseEnter("chest")} // Pass the ID to the mouse enter handler
+          id="pectorals"
+          onMouseEnter={() => handleMouseEnter("pectorals")} // Pass the ID to the mouse enter handler
           onMouseLeave={handleMouseLeave}
-          onClick={() => handleMuscleClick("chest")}
+          onClick={() => handleMuscleClick("pectorals")}
         >
           <path
             d="M277.532 219.782C277.578 219.768 277.624 219.754 277.67 219.74H277.66L277.85 219.68C282.69 218.25 291.6 215.63 307.32 217.12C334.48 219.71 334.79 236.91 334.79 237.64V287.27C334.79 297.21 331.34 306.75 325.08 314.13C318.19 322.23 309.8 328.48 300.15 332.7C300.141 332.703 300.129 332.708 300.115 332.713C300.082 332.727 300.036 332.746 299.98 332.76C298.18 333.44 296.71 334.01 295.37 334.57C295.35 334.58 295.32 334.6 295.32 334.6H295.29C288.29 337.01 281.02 338.18 273.77 338.18C255.58 338.18 237.53 330.82 224.21 317.22C224.14 317.16 224.08 317.1 224.03 317.03L223.98 316.98C223.932 316.928 223.885 316.876 223.838 316.825C223.679 316.653 223.527 316.488 223.38 316.31C223.32 316.23 223.26 316.18 223.21 316.14C223.16 316.11 223.12 316.08 223.09 316.05C222.13 315.02 221.16 313.92 220.2 312.75C213.51 304.62 205.11 295.9 190.2 295.44C190 295.43 189.83 295.28 189.79 295.08C189.75 294.88 189.86 294.68 190.05 294.6C192.28 293.66 194.23 292.63 195.85 291.53C209.29 282.42 219.75 270.14 224.78 264.23C229.196 259.042 232.486 254.704 235.386 250.879L235.59 250.61L236 250.06L236.02 250.034C242.629 241.268 246.991 235.483 257.72 228.68C264.15 224.59 271.91 221.64 275.96 220.25C276 220.23 276.05 220.22 276.11 220.2L276.69 220.02C276.75 219.99 276.79 219.97 276.85 219.97C276.869 219.964 276.887 219.958 276.906 219.954C276.917 219.951 276.929 219.95 276.94 219.95C276.953 219.947 276.967 219.941 276.982 219.936C277.013 219.924 277.049 219.91 277.09 219.91C277.236 219.872 277.382 219.827 277.532 219.782Z"
             style={{
               fill:
-                selectedMuscle === "chest" || hovered === "chest"
+                selectedMuscle === "pectorals" || hovered === "pectorals"
                   ? "lightblue"
                   : "#D3D3D3",
             }}
@@ -223,7 +262,7 @@ const SvgMapper: React.FC<{
             d="M372.63 332.76C372.54 332.74 372.44 332.69 372.44 332.69H372.42C362.8 328.48 354.41 322.23 347.51 314.13C341.26 306.77 337.82 297.23 337.82 287.27V237.61C337.81 237.61 337.77 232.46 342.02 227.28C346.71 221.57 354.54 218.15 365.29 217.13C380.986 215.63 389.895 218.259 394.676 219.669L394.68 219.67L394.95 219.75C395.15 219.82 395.35 219.88 395.54 219.93C395.58 219.93 395.63 219.95 395.69 219.97C395.7 219.97 395.79 220 395.79 220C395.83 220.01 395.87 220.02 395.92 220.04C395.94 220.05 396.03 220.08 396.05 220.08C396.16 220.12 396.26 220.15 396.37 220.18L396.51 220.23C396.547 220.241 396.582 220.253 396.616 220.265C396.677 220.287 396.737 220.307 396.8 220.32C400.85 221.72 408.53 224.66 414.88 228.7C425.617 235.498 429.988 241.297 436.595 250.063L436.6 250.07L437.03 250.64C439.98 254.53 443.32 258.93 447.88 264.29C452.95 270.24 463.4 282.49 476.75 291.54C478.37 292.64 480.32 293.67 482.55 294.61C482.74 294.69 482.85 294.89 482.81 295.09C482.78 295.3 482.6 295.45 482.4 295.45C467.48 295.9 459.09 304.62 452.39 312.76C451.52 313.84 450.6 314.86 449.5 316.06C449.5 316.07 449.48 316.09 449.48 316.09C449.47 316.1 449.455 316.112 449.44 316.125C449.425 316.137 449.41 316.15 449.4 316.16C449.34 316.2 449.3 316.23 449.25 316.3L449.03 316.55C448.98 316.603 448.931 316.657 448.882 316.71C448.784 316.817 448.687 316.923 448.58 317.03C448.59 317.04 448.51 317.12 448.44 317.19C435.13 330.8 417.05 338.17 398.85 338.17C391.6 338.17 384.32 337 377.32 334.58H377.28C377.276 334.576 377.271 334.574 377.266 334.572C377.257 334.57 377.246 334.57 377.24 334.57C375.57 333.88 373.9 333.24 372.63 332.76Z"
             style={{
               fill:
-                selectedMuscle === "chest" || hovered === "chest"
+                selectedMuscle === "pectorals" || hovered === "pectorals"
                   ? "lightblue"
                   : "#D3D3D3",
             }}
@@ -344,4 +383,202 @@ const SvgMapper: React.FC<{
   );
 };
 
-export default SvgMapper;
+interface Exercise {
+  bodyPart: string;
+  equipment: string;
+  gifUrl: string;
+  id: string;
+  name: string;
+  target: string;
+}
+
+const MuscleDB: React.FC<{
+  selectedMuscle: string | null;
+  setSelectedMuscle: (muscle: string | null) => void;
+}> = ({ selectedMuscle, setSelectedMuscle }) => {
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [selectedEquip, setSelectedEquip] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const apiKey = import.meta.env.VITE_RAPIDAPI_KEY;
+
+  useEffect(() => {
+    const fetchExercises = async () => {
+      try {
+        setTimeout(async () => {
+          const response = await axios.get<Exercise[]>(
+            "https://exercisedb.p.rapidapi.com/exercises",
+            {
+              headers: {
+                "X-RapidAPI-Key": apiKey,
+                "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
+              },
+            }
+          );
+          const exerciseData = response.data;
+
+          setExercises(exerciseData);
+          setIsLoading(false);
+        }, 1500);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchExercises();
+  }, []);
+
+  const handleMuscleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedMuscle(event.currentTarget.value);
+  };
+
+  const handleEquipChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedEquip(event.currentTarget.value);
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.currentTarget.value);
+    console.log("Search Term: ", event.currentTarget.value);
+  };
+
+  const filteredExercises = exercises.filter(
+    (exercise) =>
+      (selectedMuscle
+        ? exercise.target && exercise.target.toLowerCase() === selectedMuscle
+        : true) &&
+      (selectedEquip
+        ? exercise.equipment &&
+          exercise.equipment.toLowerCase() === selectedEquip
+        : true) &&
+      (searchTerm
+        ? exercise.name.toLowerCase().includes(searchTerm.toLowerCase())
+        : true)
+  );
+
+  return (
+    <>
+      <Input placeholder="Search by name" onChange={handleSearchChange} />
+      <Select
+        placeholder="All muscles"
+        value={selectedMuscle || ""}
+        onChange={handleMuscleChange}
+      >
+        <option value="abductors">Abductors</option>
+        <option value="abs">Abs + Obliques</option>
+        <option value="adductors">Adductors</option>
+        <option value="biceps">Biceps</option>
+        <option value="calves">Calves</option>
+        <option value="cardiovascular system">Cardiovascular System</option>
+        <option value="delts">Delts</option>
+        <option value="forearms">Forearms</option>
+        <option value="glutes">Glutes</option>
+        <option value="hamstrings">Hamstrings</option>
+        <option value="lats">Lats</option>
+        <option value="levator scapulae">Levator Scapulae</option>
+        <option value="pectorals">Pectorals</option>
+        <option value="quads">Quads</option>
+        <option value="serratus anterior">Serratus Anterior</option>
+        <option value="spine">Spine</option>
+        <option value="traps">Traps</option>
+        <option value="triceps">Triceps</option>
+        <option value="upper back">Upper Back</option>
+      </Select>
+      <Select placeholder="All equipment" onChange={handleEquipChange}>
+        <option value="assisted">Assisted</option>
+        <option value="band">Band</option>
+        <option value="barbell">Barbell</option>
+        <option value="body weight">Body Weight</option>
+        <option value="bosu ball">Bosu Ball</option>
+        <option value="cable">Cable</option>
+        <option value="dumbbell">Dumbbell</option>
+        <option value="elliptical machine">Elliptical Machine</option>
+        <option value="ez barbell">EZ Barbell</option>
+        <option value="hammer">Hammer</option>
+        <option value="kettlebell">Kettlebell</option>
+        <option value="leverage machine">Leverage Machine</option>
+        <option value="medicine ball">Medicine Ball</option>
+        <option value="olympic barbell">Olympic Barbell</option>
+        <option value="resistance band">Resistance Band</option>
+        <option value="roller">Roller</option>
+        <option value="rope">Rope</option>
+        <option value="skierg machine">Skierg Machine</option>
+        <option value="sled machine">Sled Machine</option>
+        <option value="smith machine">Smith Machine</option>
+        <option value="stability ball">Stability Ball</option>
+        <option value="stationary bike">Stationary Bike</option>
+        <option value="stepmill machine">Stepmill Machine</option>
+        <option value="tire">Tire</option>
+        <option value="trap bar">Trap Bar</option>
+        <option value="upper body ergometer">Upper Body Ergometer</option>
+        <option value="weighted">Weighted</option>
+        <option value="wheel roller">Wheel Roller</option>
+      </Select>
+
+      <Flex flexWrap="wrap">
+        {isLoading ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : (
+          filteredExercises.map((exercise, index) => (
+            <div>
+              <Card maxW="sm" margin={3} height="600px">
+                <CardBody>
+                  <Image
+                    src={exercise.gifUrl}
+                    alt="exercise"
+                    borderRadius="lg"
+                  />
+                  <Stack mt="6" spacing="3">
+                    <Heading size="md">
+                      <Text style={{ textTransform: "capitalize" }}></Text>
+                    </Heading>
+
+                    <Stack direction="row">
+                      <Badge fontSize=".9em" colorScheme="blue">
+                        {exercise.target}
+                      </Badge>
+                      <Badge fontSize=".9em" colorScheme="green">
+                        {exercise.equipment}
+                      </Badge>
+                    </Stack>
+
+                    <Text
+                      style={{ textTransform: "capitalize" }}
+                      fontSize="2xl"
+                    >
+                      {exercise.name}
+                    </Text>
+                  </Stack>
+                </CardBody>
+                <Divider />
+                <CardFooter>
+                  <ButtonGroup spacing="2">
+                    <Button variant="solid" colorScheme="red">
+                      More Info
+                    </Button>
+                    <Button variant="ghost" colorScheme="red">
+                      Similar
+                    </Button>
+                  </ButtonGroup>
+                </CardFooter>
+              </Card>
+            </div>
+          ))
+        )}
+      </Flex>
+    </>
+  );
+};
+
+export default ParentComponent;

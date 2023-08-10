@@ -38,6 +38,7 @@ import { IconType } from "react-icons";
 import ImageMapComponent from "./ImageMapper";
 import MuscleDB from "./MuscleDB";
 import SvgMapper from "./SvgMapper";
+import ParentComponent from "./Parent";
 
 interface LinkItemProps {
   name: string;
@@ -237,8 +238,7 @@ const SidebarWithHeader = () => {
       <Box ml={{ base: 0, md: 60 }} p="4">
         {
           <>
-            <SvgMapper />
-            <MuscleDB />
+            <ParentComponent />
           </>
         }
       </Box>
