@@ -136,7 +136,7 @@ const SvgMapper: React.FC<{
       const offsetTop =
         element.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
-        top: offsetTop - 0, // Scroll to 50px above the element
+        top: offsetTop - 15, // Scroll to 50px above the element
         behavior: "smooth",
       });
     }
@@ -924,7 +924,7 @@ const MuscleDB: React.FC<{
                 <CardBody>
                   <Image
                     src={exercise.gifUrl}
-                    alt="exercise"
+                    alt={exercise.name}
                     borderRadius="lg"
                   />
                   <Stack mt="6" spacing="3">
@@ -973,9 +973,9 @@ const ScrollTop: React.FC = () => {
   const [showButton, setShowButton] = useState(false);
 
   const checkScrollTop = () => {
-    if (!showButton && window.pageYOffset > 175) {
+    if (!showButton && window.pageYOffset > 200) {
       setShowButton(true);
-    } else if (showButton && window.pageYOffset <= 175) {
+    } else if (showButton && window.pageYOffset <= 200) {
       setShowButton(false);
     }
   };
@@ -986,7 +986,7 @@ const ScrollTop: React.FC = () => {
       const offsetTop =
         element.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
-        top: offsetTop - 0, // Scroll to 50px above the element
+        top: offsetTop, // Scroll to 50px above the element
         behavior: "smooth",
       });
     }
@@ -1000,8 +1000,8 @@ const ScrollTop: React.FC = () => {
   return showButton ? (
     <Box
       position="fixed"
-      bottom={2}
-      right={2}
+      bottom={4}
+      right={4}
       zIndex={999}
       onClick={handleClick}
     >
@@ -1009,7 +1009,7 @@ const ScrollTop: React.FC = () => {
         <ArrowUpIcon boxSize={8} />
       </Button>
     </Box>
-  ) : null; // Explicitly returning null when showButton is false
+  ) : null;
 };
 
 export default ParentComponent;
