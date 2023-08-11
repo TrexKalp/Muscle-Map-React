@@ -854,7 +854,7 @@ const MuscleDB: React.FC<{
 
   return (
     <div id="musclecards">
-      <InputGroup margin="5px" paddingRight="10px">
+      <InputGroup margin="5px" paddingRight="10px" justifyContent="center">
         <InputLeftElement
           pointerEvents="none"
           children={<Search2Icon color="gray.600" />}
@@ -875,6 +875,7 @@ const MuscleDB: React.FC<{
           control: (baseStyles, state) => ({
             ...baseStyles,
             margin: "5px",
+            justifyContent: "center",
           }),
         }}
       ></ReactSelect>
@@ -888,11 +889,12 @@ const MuscleDB: React.FC<{
           control: (baseStyles, state) => ({
             ...baseStyles,
             margin: "5px",
+            justifyContent: "center",
           }),
         }}
       ></ReactSelect>
 
-      <Flex flexWrap="wrap">
+      <Flex flexWrap="wrap" justify="center">
         {isLoading ? (
           <>
             <SkeletonCard />
@@ -908,7 +910,7 @@ const MuscleDB: React.FC<{
         ) : (
           filteredExercises.map((exercise, index) => (
             <div>
-              <Card maxW="sm" margin={3} height="600px">
+              <Card maxW="sm" margin={3} height="600px" justify="center">
                 <CardBody>
                   <Image
                     src={exercise.gifUrl}
@@ -966,6 +968,12 @@ const ScrollTop: React.FC = () => {
     } else if (showButton && window.pageYOffset <= 175) {
       setShowButton(false);
     }
+
+    return showButton ? (
+      <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+        Scroll to Top
+      </button>
+    ) : null; // Return null instead of false
   };
 
   const handleClick = () => {

@@ -2421,10 +2421,10 @@
   "resolved" "https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz"
   "version" "1.0.0"
 
-"postcss@^8.4.24":
-  "integrity" "sha512-7taJ/8t2av0Z+sQEvNzCkpDynl0tX3uJMCODi6nT3PfASC7dYCWV9aQ+uiCf+KBD4SEFcu+GvJdGdwzQ6OSjCw=="
-  "resolved" "https://registry.npmjs.org/postcss/-/postcss-8.4.25.tgz"
-  "version" "8.4.25"
+"postcss@^8.4.27":
+  "integrity" "sha512-gY/ACJtJPSmUFPDCHtX78+01fHa64FaU4zaaWfuh1MhGJISufJAH4cun6k/8fwsHYeK4UQmENQK+tRLCFJE8JQ=="
+  "resolved" "https://registry.npmjs.org/postcss/-/postcss-8.4.27.tgz"
+  "version" "8.4.27"
   dependencies:
     "nanoid" "^3.3.6"
     "picocolors" "^1.0.0"
@@ -2627,10 +2627,10 @@
     "path-parse" "^1.0.7"
     "supports-preserve-symlinks-flag" "^1.0.0"
 
-"rollup@^3.25.2":
-  "integrity" "sha512-6umBIGVz93er97pMgQO08LuH3m6PUb3jlDUUGFsNJB6VgTCUaDFpupf5JfU30529m/UKOgmiX+uY6Sx8cOYpLA=="
-  "resolved" "https://registry.npmjs.org/rollup/-/rollup-3.26.2.tgz"
-  "version" "3.26.2"
+"rollup@^3.27.1":
+  "integrity" "sha512-d7zhvo1OUY2SXSM6pfNjgD5+d0Nz87CUp4mt8l/GgVP3oBsPwzNvSzyu1me6BSG9JIgWNTVcafIXBIyM8yQ3yw=="
+  "resolved" "https://registry.npmjs.org/rollup/-/rollup-3.28.0.tgz"
+  "version" "3.28.0"
   optionalDependencies:
     "fsevents" "~2.3.2"
 
@@ -2837,14 +2837,14 @@
   "resolved" "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   "version" "1.1.2"
 
-"vite@^4.1.0", "vite@^4.1.0-beta.0":
-  "integrity" "sha512-zUcsJN+UvdSyHhYa277UHhiJ3iq4hUBwHavOpsNUGsTgjBeoBlK8eDt+iT09pBq0h9/knhG/SPrZiM7cGmg7NA=="
-  "resolved" "https://registry.npmjs.org/vite/-/vite-4.4.2.tgz"
-  "version" "4.4.2"
+"vite@^4.1.0-beta.0":
+  "integrity" "sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA=="
+  "resolved" "https://registry.npmjs.org/vite/-/vite-4.4.9.tgz"
+  "version" "4.4.9"
   dependencies:
     "esbuild" "^0.18.10"
-    "postcss" "^8.4.24"
-    "rollup" "^3.25.2"
+    "postcss" "^8.4.27"
+    "rollup" "^3.27.1"
   optionalDependencies:
     "fsevents" "~2.3.2"
 
