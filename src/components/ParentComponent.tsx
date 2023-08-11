@@ -16,13 +16,74 @@ import {
   Flex,
   Box,
   VStack,
-  Select,
   Input,
   Badge,
+  InputRightAddon,
+  InputGroup,
+  InputLeftElement,
+  FormControl,
+  FormLabel,
+  Code,
+  Select,
 } from "@chakra-ui/react";
 import SkeletonCard from "./SkeletonCard";
-import { Slide } from "@chakra-ui/react";
-import { ArrowUpIcon } from "@chakra-ui/icons";
+import { ArrowUpIcon, Search2Icon } from "@chakra-ui/icons";
+import ReactSelect, { ActionMeta } from "react-select";
+
+const muscleOptions = [
+  { value: "", label: "All muscles" },
+  { value: "abductors", label: "Abductors" },
+  { value: "abs", label: "Abs/Obliques" },
+  { value: "adductors", label: "Adductors" },
+  { value: "biceps", label: "Biceps" },
+  { value: "calves", label: "Calves" },
+  { value: "cardiovascular system", label: "Cardiovascular System" },
+  { value: "delts", label: "Shoulders/Delts" },
+  { value: "forearms", label: "Forearms" },
+  { value: "glutes", label: "Glutes" },
+  { value: "hamstrings", label: "Hamstrings" },
+  { value: "lats", label: "Lats" },
+  { value: "levator scapulae", label: "Levator Scapulae" },
+  { value: "pectorals", label: "Pectorals" },
+  { value: "quads", label: "Quads" },
+  { value: "serratus anterior", label: "Serratus Anterior" },
+  { value: "spine", label: "Spine" },
+  { value: "traps", label: "Traps" },
+  { value: "triceps", label: "Triceps" },
+  { value: "upper back", label: "Upper/Lower Back" },
+];
+
+const equipOptions = [
+  { value: "", label: "All equipment" },
+  { value: "assisted", label: "Assisted" },
+  { value: "band", label: "Band" },
+  { value: "barbell", label: "Barbell" },
+  { value: "body weight", label: "Body Weight" },
+  { value: "bosu ball", label: "Bosu Ball" },
+  { value: "cable", label: "Cable" },
+  { value: "dumbbell", label: "Dumbbell" },
+  { value: "elliptical machine", label: "Elliptical Machine" },
+  { value: "ez barbell", label: "EZ Barbell" },
+  { value: "hammer", label: "Hammer" },
+  { value: "kettlebell", label: "Kettlebell" },
+  { value: "leverage machine", label: "Leverage Machine" },
+  { value: "medicine ball", label: "Medicine Ball" },
+  { value: "olympic barbell", label: "Olympic Barbell" },
+  { value: "resistance band", label: "Resistance Band" },
+  { value: "roller", label: "Roller" },
+  { value: "rope", label: "Rope" },
+  { value: "skierg machine", label: "Skierg Machine" },
+  { value: "sled machine", label: "Sled Machine" },
+  { value: "smith machine", label: "Smith Machine" },
+  { value: "stability ball", label: "Stability Ball" },
+  { value: "stationary bike", label: "Stationary Bike" },
+  { value: "stepmill machine", label: "Stepmill Machine" },
+  { value: "tire", label: "Tire" },
+  { value: "trap bar", label: "Trap Bar" },
+  { value: "upper body ergometer", label: "Upper Body Ergometer" },
+  { value: "weighted", label: "Weighted" },
+  { value: "wheel roller", label: "Wheel Roller" },
+];
 
 const ParentComponent: React.FC = () => {
   const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null);
@@ -50,7 +111,6 @@ const SvgMapper: React.FC<{
   // Change the type of the state variable
 
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  const [dropdownValue, setDropdownValue] = useState<string>("");
 
   const handleMouseEnter = (id: string) => {
     // Add an ID parameter
@@ -82,21 +142,24 @@ const SvgMapper: React.FC<{
     }
 
     setSelectedMuscle(muscleName);
-    setDropdownValue(muscleName);
   };
 
   return (
     <>
       <div
         id="imagemap"
-        style={{ display: "flex", justifyContent: "center", margin: "50px" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          margin: "50px",
+          verticalAlign: "middle",
+        }}
       >
         <svg
-          height="800px"
-          viewBox="0 0 673 1200"
+          viewBox="0 0 700 1200"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          style={{ marginRight: "50px" }}
+          height="50%"
         >
           <g
             className={`body-map__muscle ${
@@ -398,10 +461,9 @@ const SvgMapper: React.FC<{
         </svg>
 
         <svg
-          height="800px"
-          viewBox="0 0 673 1200"
-          fill="none"
+          viewBox="0 0 700 1200"
           xmlns="http://www.w3.org/2000/svg"
+          height="50%"
         >
           <g
             className={`body-map__muscle ${
@@ -743,12 +805,24 @@ const MuscleDB: React.FC<{
     fetchExercises();
   }, []);
 
-  const handleMuscleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMuscle(event.currentTarget.value);
+  type OptionType = { value: string; label: string };
+
+  const handleMuscleChange = (
+    selectedOption: OptionType | null,
+    _actionMeta: ActionMeta<OptionType>
+  ) => {
+    if (selectedOption) {
+      setSelectedMuscle(selectedOption.value);
+    }
   };
 
-  const handleEquipChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedEquip(event.currentTarget.value);
+  const handleEquipChange = (
+    selectedOption: OptionType | null,
+    _actionMeta: ActionMeta<OptionType>
+  ) => {
+    if (selectedOption) {
+      setSelectedEquip(selectedOption.value);
+    }
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -770,64 +844,53 @@ const MuscleDB: React.FC<{
         : true)
   );
 
+  const selectedOption = selectedMuscle
+    ? muscleOptions.find((option) => option.value === selectedMuscle)
+    : null;
+
+  const selectedOption2 = selectedEquip
+    ? equipOptions.find((option) => option.value === selectedEquip)
+    : null;
+
   return (
     <div id="musclecards">
-      <Input placeholder="Search by name" onChange={handleSearchChange} />
-      <Select
-        placeholder="All muscles"
-        value={selectedMuscle || ""}
+      <InputGroup margin="5px" paddingRight="10px">
+        <InputLeftElement
+          pointerEvents="none"
+          children={<Search2Icon color="gray.600" />}
+        />
+        <Input
+          type="text"
+          placeholder="Search..."
+          onChange={handleSearchChange}
+        />
+      </InputGroup>
+
+      <ReactSelect
+        value={selectedOption}
+        placeholder="Search muscles..."
+        options={muscleOptions}
         onChange={handleMuscleChange}
-      >
-        <option value="abductors">Abductors</option>
-        <option value="abs">Abs/Obliques</option>
-        <option value="adductors">Adductors</option>
-        <option value="biceps">Biceps</option>
-        <option value="calves">Calves</option>
-        <option value="cardiovascular system">Cardiovascular System</option>
-        <option value="delts">Shoulders/Delts</option>
-        <option value="forearms">Forearms</option>
-        <option value="glutes">Glutes</option>
-        <option value="hamstrings">Hamstrings</option>
-        <option value="lats">Lats</option>
-        <option value="levator scapulae">Levator Scapulae</option>
-        <option value="pectorals">Pectorals</option>
-        <option value="quads">Quads</option>
-        <option value="serratus anterior">Serratus Anterior</option>
-        <option value="spine">Spine</option>
-        <option value="traps">Traps</option>
-        <option value="triceps">Triceps</option>
-        <option value="upper back">Upper/Lower Back</option>
-      </Select>
-      <Select placeholder="All equipment" onChange={handleEquipChange}>
-        <option value="assisted">Assisted</option>
-        <option value="band">Band</option>
-        <option value="barbell">Barbell</option>
-        <option value="body weight">Body Weight</option>
-        <option value="bosu ball">Bosu Ball</option>
-        <option value="cable">Cable</option>
-        <option value="dumbbell">Dumbbell</option>
-        <option value="elliptical machine">Elliptical Machine</option>
-        <option value="ez barbell">EZ Barbell</option>
-        <option value="hammer">Hammer</option>
-        <option value="kettlebell">Kettlebell</option>
-        <option value="leverage machine">Leverage Machine</option>
-        <option value="medicine ball">Medicine Ball</option>
-        <option value="olympic barbell">Olympic Barbell</option>
-        <option value="resistance band">Resistance Band</option>
-        <option value="roller">Roller</option>
-        <option value="rope">Rope</option>
-        <option value="skierg machine">Skierg Machine</option>
-        <option value="sled machine">Sled Machine</option>
-        <option value="smith machine">Smith Machine</option>
-        <option value="stability ball">Stability Ball</option>
-        <option value="stationary bike">Stationary Bike</option>
-        <option value="stepmill machine">Stepmill Machine</option>
-        <option value="tire">Tire</option>
-        <option value="trap bar">Trap Bar</option>
-        <option value="upper body ergometer">Upper Body Ergometer</option>
-        <option value="weighted">Weighted</option>
-        <option value="wheel roller">Wheel Roller</option>
-      </Select>
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            margin: "5px",
+          }),
+        }}
+      ></ReactSelect>
+
+      <ReactSelect
+        value={selectedOption2}
+        placeholder="Search equipment..."
+        options={equipOptions}
+        onChange={handleEquipChange}
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            margin: "5px",
+          }),
+        }}
+      ></ReactSelect>
 
       <Flex flexWrap="wrap">
         {isLoading ? (

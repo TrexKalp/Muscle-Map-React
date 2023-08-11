@@ -7,7 +7,13 @@ const ColorModeSwitch = () => {
     <HStack>
       <Text>Dark Mode</Text>
       <Switch
-        colorScheme="green"
+        size="md"
+        colorScheme="blue"
+        sx={{
+          "input[type=checkbox]:not(:checked) ~ span": {
+            backgroundColor: "gray",
+          },
+        }}
         isChecked={colorMode === "dark"}
         onChange={toggleColorMode}
       />

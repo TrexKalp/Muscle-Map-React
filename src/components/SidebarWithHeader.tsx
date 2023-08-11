@@ -162,7 +162,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
-        <ColorModeSwitch />
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -197,7 +196,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             >
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
+
               <MenuDivider />
               <MenuItem>Sign out</MenuItem>
             </MenuList>
