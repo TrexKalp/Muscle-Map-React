@@ -153,6 +153,8 @@ const SvgMapper: React.FC<{
           flexDirection: "row",
           justifyItems: "center",
           padding: "5%",
+          height: "100%",
+          width: "100%",
         }}
       >
         <svg
@@ -160,6 +162,7 @@ const SvgMapper: React.FC<{
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           height="100%"
+          width="100%"
         >
           <g
             className={`body-map__muscle ${
@@ -464,6 +467,7 @@ const SvgMapper: React.FC<{
           viewBox="0 0 700 1200"
           xmlns="http://www.w3.org/2000/svg"
           height="100%"
+          width="100%"
         >
           <g
             className={`body-map__muscle ${
