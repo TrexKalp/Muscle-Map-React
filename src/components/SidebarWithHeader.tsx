@@ -21,6 +21,7 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Badge,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -80,9 +81,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="arial" fontWeight="bold">
-          MuscleMap
-        </Text>
+        <HStack>
+          <Text fontSize="2xl" fontFamily="arial" fontWeight="bold">
+            MuscleMap
+          </Text>
+          <Badge colorScheme="blue">Beta</Badge>
+        </HStack>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (

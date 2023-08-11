@@ -968,12 +968,6 @@ const ScrollTop: React.FC = () => {
     } else if (showButton && window.pageYOffset <= 175) {
       setShowButton(false);
     }
-
-    return showButton ? (
-      <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-        Scroll to Top
-      </button>
-    ) : null; // Return null instead of false
   };
 
   const handleClick = () => {
@@ -993,21 +987,19 @@ const ScrollTop: React.FC = () => {
     return () => window.removeEventListener("scroll", checkScrollTop);
   }, [showButton]);
 
-  return (
-    showButton && (
-      <Box
-        position="fixed"
-        bottom={2}
-        right={2}
-        zIndex={999}
-        onClick={handleClick}
-      >
-        <Button fontSize="xl" colorScheme="red" size="lg" p={6}>
-          <ArrowUpIcon boxSize={8} />
-        </Button>
-      </Box>
-    )
-  );
+  return showButton ? (
+    <Box
+      position="fixed"
+      bottom={2}
+      right={2}
+      zIndex={999}
+      onClick={handleClick}
+    >
+      <Button fontSize="xl" colorScheme="red" size="lg" p={6}>
+        <ArrowUpIcon boxSize={8} />
+      </Button>
+    </Box>
+  ) : null; // Explicitly returning null when showButton is false
 };
 
 export default ParentComponent;
