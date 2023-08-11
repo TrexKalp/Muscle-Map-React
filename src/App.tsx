@@ -15,6 +15,7 @@ import {
 
 import SidebarWithHeader from "./components/SidebarWithHeader";
 import { Box, useBreakpointValue } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 
 function App() {
   const templateLayout = useBreakpointValue({

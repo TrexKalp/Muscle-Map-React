@@ -97,7 +97,12 @@ const MuscleDB: React.FC = () => {
     <>
       <Flex flexWrap="wrap">
         <div>
-          <Card width="500px" maxW="sm" margin={3}>
+          <Card
+            width={["300px", "300px", "400px"]}
+            height={["500px", "550px", "600px"]}
+            maxW="sm"
+            margin={3}
+          >
             <CardBody>
               <Stack maxW="sm" margin={3} spacing={3}>
                 <Skeleton

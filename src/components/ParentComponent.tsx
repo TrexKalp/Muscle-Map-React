@@ -136,7 +136,7 @@ const SvgMapper: React.FC<{
       const offsetTop =
         element.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
-        top: offsetTop - 25, // Scroll to 50px above the element
+        top: offsetTop - 0, // Scroll to 50px above the element
         behavior: "smooth",
       });
     }
@@ -150,16 +150,16 @@ const SvgMapper: React.FC<{
         id="imagemap"
         style={{
           display: "flex",
-          justifyContent: "center",
-          margin: "50px",
-          verticalAlign: "middle",
+          flexDirection: "row",
+          justifyItems: "center",
+          padding: "5%",
         }}
       >
         <svg
           viewBox="0 0 700 1200"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          height="50%"
+          height="100%"
         >
           <g
             className={`body-map__muscle ${
@@ -463,7 +463,7 @@ const SvgMapper: React.FC<{
         <svg
           viewBox="0 0 700 1200"
           xmlns="http://www.w3.org/2000/svg"
-          height="50%"
+          height="100%"
         >
           <g
             className={`body-map__muscle ${
@@ -854,7 +854,7 @@ const MuscleDB: React.FC<{
 
   return (
     <div id="musclecards">
-      <InputGroup margin="5px" paddingRight="10px" justifyContent="center">
+      <InputGroup margin="5px" justifyContent="center" paddingRight={2}>
         <InputLeftElement
           pointerEvents="none"
           children={<Search2Icon color="gray.600" />}
@@ -909,8 +909,14 @@ const MuscleDB: React.FC<{
           </>
         ) : (
           filteredExercises.map((exercise, index) => (
-            <div>
-              <Card maxW="sm" margin={3} height="600px" justify="center">
+            <div key={exercise.id}>
+              <Card
+                maxW={"sm"}
+                margin={3}
+                justify="center"
+                width={["300px", "300px", "400px"]}
+                height={["500px", "550px", "600px"]}
+              >
                 <CardBody>
                   <Image
                     src={exercise.gifUrl}
@@ -945,7 +951,7 @@ const MuscleDB: React.FC<{
                     <Button variant="solid" colorScheme="red">
                       More Info
                     </Button>
-                    <Button variant="ghost" colorScheme="red">
+                    <Button variant="outline" colorScheme="red">
                       Similar
                     </Button>
                   </ButtonGroup>
@@ -976,7 +982,7 @@ const ScrollTop: React.FC = () => {
       const offsetTop =
         element.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
-        top: offsetTop - 25, // Scroll to 50px above the element
+        top: offsetTop - 0, // Scroll to 50px above the element
         behavior: "smooth",
       });
     }
